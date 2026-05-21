@@ -1,0 +1,433 @@
+.voice-agent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+}
+
+/* Orb */
+.va-orb-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.va-orb {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.va-orb-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: all 0.4s ease;
+}
+
+.va-orb-ring.ring-1 {
+  width: 100%;
+  height: 100%;
+  border-color: rgba(0, 114, 206, 0.2);
+}
+
+.va-orb-ring.ring-2 {
+  width: 85%;
+  height: 85%;
+  border-color: rgba(0, 114, 206, 0.35);
+}
+
+.va-orb-ring.ring-3 {
+  width: 70%;
+  height: 70%;
+  border-color: rgba(0, 114, 206, 0.5);
+}
+
+.va-orb-core {
+  width: 55%;
+  height: 55%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #0096ff, #004684 60%, #002d54);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.3rem;
+  box-shadow: 0 0 20px rgba(0, 150, 255, 0.4), 0 0 40px rgba(0, 70, 132, 0.2);
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+.va-status-label {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Idle state - Cortana style */
+.va-orb.idle .va-orb-core {
+  background: radial-gradient(circle at 30% 30%, #0096ff, #004684 60%, #002d54);
+  box-shadow: 0 0 20px rgba(0, 150, 255, 0.4), 0 0 40px rgba(0, 70, 132, 0.2);
+  animation: cortanaGlow 3s ease-in-out infinite;
+}
+
+.va-orb.idle .va-orb-ring.ring-1 {
+  animation: cortanaPulse 3s ease-in-out infinite;
+  border-color: rgba(0, 150, 255, 0.3);
+}
+
+.va-orb.idle .va-orb-ring.ring-2 {
+  animation: cortanaPulse 3s ease-in-out infinite 0.5s;
+  border-color: rgba(0, 150, 255, 0.2);
+}
+
+.va-orb.idle .va-orb-ring.ring-3 {
+  animation: cortanaPulse 3s ease-in-out infinite 1s;
+  border-color: rgba(0, 150, 255, 0.15);
+}
+
+@keyframes cortanaGlow {
+  0%, 100% { 
+    box-shadow: 0 0 20px rgba(0, 150, 255, 0.4), 0 0 40px rgba(0, 70, 132, 0.2);
+    transform: scale(1);
+  }
+  50% { 
+    box-shadow: 0 0 30px rgba(0, 150, 255, 0.6), 0 0 60px rgba(0, 70, 132, 0.3);
+    transform: scale(1.03);
+  }
+}
+
+@keyframes cortanaPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.08); opacity: 0.3; }
+}
+
+/* Listening state */
+.va-orb.listening .va-orb-core {
+  background: radial-gradient(circle at 30% 30%, #e8344f, #ce0e2d 60%, #a80b24);
+  box-shadow: 0 0 25px rgba(206, 14, 45, 0.5), 0 0 50px rgba(206, 14, 45, 0.2);
+  animation: orbBreathe 1s ease-in-out infinite;
+}
+
+.va-orb.listening .va-orb-ring {
+  border-color: rgba(206, 14, 45, 0.4);
+  animation: orbRipple 1.5s ease-out infinite;
+}
+
+.va-orb.listening .va-orb-ring.ring-2 {
+  animation-delay: 0.3s;
+}
+
+.va-orb.listening .va-orb-ring.ring-3 {
+  animation-delay: 0.6s;
+}
+
+/* Thinking state */
+.va-orb.thinking .va-orb-core {
+  background: radial-gradient(circle at 30% 30%, #fbbf24, #f59e0b 60%, #d97706);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 0 40px rgba(245, 158, 11, 0.2);
+  animation: orbSpin 1.5s linear infinite;
+}
+
+.va-orb.thinking .va-orb-ring {
+  border-color: rgba(245, 158, 11, 0.3);
+  animation: orbRotate 2s linear infinite;
+}
+
+.va-orb.thinking .va-orb-ring.ring-2 {
+  animation-direction: reverse;
+  animation-duration: 2.5s;
+}
+
+.va-orb.thinking .va-orb-ring.ring-3 {
+  animation-duration: 3s;
+}
+
+/* Speaking state */
+.va-orb.speaking .va-orb-core {
+  background: radial-gradient(circle at 30% 30%, #4ade80, #22c55e 60%, #16a34a);
+  box-shadow: 0 0 25px rgba(34, 197, 94, 0.5), 0 0 50px rgba(34, 197, 94, 0.2);
+  animation: orbPulse 0.8s ease-in-out infinite;
+}
+
+.va-orb.speaking .va-orb-ring {
+  border-color: rgba(34, 197, 94, 0.4);
+  animation: orbSoundWave 0.6s ease-in-out infinite;
+}
+
+.va-orb.speaking .va-orb-ring.ring-2 {
+  animation-delay: 0.15s;
+}
+
+.va-orb.speaking .va-orb-ring.ring-3 {
+  animation-delay: 0.3s;
+}
+
+/* Animations */
+@keyframes orbPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes orbBreathe {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 25px rgba(206, 14, 45, 0.5); }
+  50% { transform: scale(1.08); box-shadow: 0 0 35px rgba(206, 14, 45, 0.7); }
+}
+
+@keyframes orbRipple {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.3); opacity: 0; }
+}
+
+@keyframes orbSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes orbRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes orbSoundWave {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.8; }
+}
+
+/* Conversation */
+.va-conversation {
+  width: 100%;
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.2) transparent;
+}
+
+.va-conversation::-webkit-scrollbar {
+  width: 4px;
+}
+
+.va-conversation::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.va-conversation::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 4px;
+}
+
+.va-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  color: rgba(255,255,255,0.4);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.va-empty i {
+  font-size: 1.5rem;
+}
+
+.va-msg {
+  display: flex;
+  gap: 0.5rem;
+  align-items: flex-start;
+  animation: msgSlideIn 0.3s ease-out;
+}
+
+@keyframes msgSlideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.va-msg.user {
+  flex-direction: row-reverse;
+}
+
+.va-msg-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  flex-shrink: 0;
+}
+
+.va-msg.user .va-msg-icon {
+  background: linear-gradient(135deg, #ce0e2d, #a80b24);
+  color: #ffffff;
+}
+
+.va-msg.bot .va-msg-icon {
+  background: linear-gradient(135deg, #004684, #0072ce);
+  color: #ffffff;
+}
+
+.va-msg-bubble {
+  max-width: 85%;
+  padding: 0.5rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.va-msg.user .va-msg-bubble {
+  background: rgba(206, 14, 45, 0.25);
+  color: rgba(255,255,255,0.9);
+  border-bottom-right-radius: 4px;
+}
+
+.va-msg.bot .va-msg-bubble {
+  background: rgba(0, 70, 132, 0.25);
+  color: rgba(255,255,255,0.9);
+  border-bottom-left-radius: 4px;
+}
+
+.va-cursor {
+  animation: blink 0.8s step-end infinite;
+  color: rgba(255,255,255,0.6);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Controls */
+.va-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.va-mic-btn,
+.va-stop-btn,
+.va-clear-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.85rem;
+  color: #ffffff;
+}
+
+.va-mic-btn {
+  background: linear-gradient(135deg, #004684, #0072ce);
+  box-shadow: 0 2px 8px rgba(0,70,132,0.3);
+}
+
+.va-mic-btn:hover:not(:disabled) {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(0,70,132,0.4);
+}
+
+.va-mic-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.va-mic-btn.active {
+  background: linear-gradient(135deg, #ce0e2d, #e8344f);
+  box-shadow: 0 2px 8px rgba(206,14,45,0.4);
+  animation: micPulse 1s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 2px 8px rgba(206,14,45,0.4); }
+  50% { box-shadow: 0 4px 16px rgba(206,14,45,0.6); }
+}
+
+.va-stop-btn {
+  background: linear-gradient(135deg, #ce0e2d, #a80b24);
+  box-shadow: 0 2px 8px rgba(206,14,45,0.3);
+}
+
+.va-stop-btn:hover {
+  transform: scale(1.1);
+}
+
+.va-clear-btn {
+  background: rgba(255,255,255,0.1);
+  box-shadow: none;
+}
+
+.va-clear-btn:hover {
+  background: rgba(255,255,255,0.2);
+  transform: scale(1.1);
+}
+
+/* Sidebar mode */
+.voice-agent.sidebar-mode {
+  padding: 0.25rem;
+  gap: 0.5rem;
+}
+
+.voice-agent.sidebar-mode .va-orb {
+  width: 56px;
+  height: 56px;
+}
+
+.voice-agent.sidebar-mode .va-orb-core {
+  font-size: 1rem;
+}
+
+.voice-agent.sidebar-mode .va-status-label {
+  font-size: 0.6rem;
+}
+
+.voice-agent.sidebar-mode .va-conversation {
+  max-height: 180px;
+}
+
+.voice-agent.sidebar-mode .va-msg-bubble {
+  font-size: 0.7rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.voice-agent.sidebar-mode .va-msg-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 0.55rem;
+}
+
+.voice-agent.sidebar-mode .va-mic-btn,
+.voice-agent.sidebar-mode .va-stop-btn,
+.voice-agent.sidebar-mode .va-clear-btn {
+  width: 30px;
+  height: 30px;
+  font-size: 0.75rem;
+}
+
+.voice-agent.sidebar-mode .va-empty {
+  font-size: 0.65rem;
+  padding: 0.5rem;
+}
+
+.voice-agent.sidebar-mode .va-empty i {
+  font-size: 1.2rem;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "cortana-backend",
+  "version": "1.0.0",
+  "description": "Backend Azure Functions para el asistente Cortana de La Salle",
+  "scripts": {
+    "start": "func start",
+    "dev": "func start"
+  },
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@azure/openai": "^1.0.0-beta.11",
+    "dotenv": "^16.0.0",
+    "mssql": "^12.5.4"
+  },
+  "main": "src/functions/*.js"
+}
